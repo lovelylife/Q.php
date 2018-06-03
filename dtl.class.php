@@ -335,6 +335,8 @@ class CLASS_DTL {
   // out put html
   function __toString() 
   {
+    try {
+
     $tpl = $this->t_->complie_php_vars($this->tpl_data_);
     $this->initDataSource();    
     $out_html_ = $this->onheader();  
@@ -345,7 +347,9 @@ class CLASS_DTL {
       $tpl
     );    
     $out_html_ .= $this->onfooter();
-
+    } catch( Exception $e ) {
+      trigger_error( $e, E_USER_ERROR );
+    }
     return $out_html_;
   }
 
