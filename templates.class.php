@@ -242,7 +242,7 @@ class CLASS_TEMPLATES
     $attrs = CLASS_DTL::parse_attrs($matches[0]);
     if($subvars != '') {
       $sTemp = '';
-      $arr = str_split('\.', $subvars);
+      $arr = preg_split('/\./', $subvars);
       $len = count($arr);
       for($i=1; $i<$len; $i++) {
         $sTemp .= '[\''.$arr[$i].'\']';
@@ -258,7 +258,7 @@ class CLASS_TEMPLATES
       $expression = '$'.$expression;
     }
 
-    // echo $expression;
+    //echo $expression;
     return '<?='.$expression.'?>';
   }
 
@@ -278,10 +278,10 @@ class CLASS_TEMPLATES
     
     // 获取变量值, 处理子值    
     $varname = $matches[2];    
-    $subvars = $matches[3];    
+    $subvars = $matches[3];
     $value = $this->$vartype($varname);    
-    if($subvars != '') {    
-      $subvars = str_split('\.', $subvars);    
+    if($subvars != '') {   
+      $subvars = preg_split('/\./', $subvars);
       $len = count($subvars);    
       //print_r($subvars);    
       for($i=1; $i<$len; $i++) {    
@@ -293,7 +293,7 @@ class CLASS_TEMPLATES
         }    
       }    
     }    
-    
+
     //! 解析属性    
     $attrs = CLASS_DTL::parse_attrs($matches[0]);    
     
