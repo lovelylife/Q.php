@@ -345,7 +345,7 @@ function q_decrypt($input, $key)
 
 function q_inject_check($sql_str) 
 { 
-    return eregi('select|insert|and|or|update|delete|\'|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile', $sql_str);
+    return preg_match('/select|insert|and|or|update|delete|\'|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile/i', $sql_str);
 }
 
 function qsubstr( $str, $start, $len, $ellipse ) {

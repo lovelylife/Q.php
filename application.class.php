@@ -145,7 +145,7 @@ class CLASS_APPLICATION {
  
   // deliver char is '.', for example: dbs.default.host
   function Config($cfg_name) {
-    $subvars = str_split('\.', $cfg_name);
+    $subvars = preg_split('/\./', $cfg_name);
     $len = count($subvars);
     $value = $this->_refCONFIG[$subvars[0]];
     for($i=1; $i<$len; $i++) {

@@ -59,7 +59,7 @@ class CLASS_DB_MYSQL {
     // set language
     //mysql_query("SET NAMES '".$this->db_lang."';", $this->linker);
     // sql mode
-    //@mysql_query("SET sql_mode='' ;", $this->linker);
+    //@mysqdl_query("SET sql_mode='' ;", $this->linker);
   }
 
   // ×éºÏinsertÓï¾ä(insert into ##__$table(...) values(...);
@@ -125,8 +125,12 @@ class CLASS_DB_MYSQL {
       $context = $this;
       $method  = 'dummy';
     }
+    
+    $res = $this->linker->prepare( $this->sql );
+    $res->execute();
 
-    foreach( $this->linker->query( $this->sql ) as $record ) {
+    while( $record = $res->fetch( PDO::FETCH_ASSOC ) ) {
+      //print_r( $record );
       $context->$method($record);
       array_push($result, $record);
     }
@@ -194,7 +198,7 @@ class CLASS_DB_MYSQL {
   }
   
   function get_insert_id() {
-    return mysql_insert_id($this->linker);
+    return $this->linker->lastInsertId();
   }
   
   function affected_rows() {
