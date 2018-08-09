@@ -92,6 +92,7 @@ class CLASS_DB_MYSQL {
   
   function setQuery($sql) {
     $this->sql = str_replace("##__", $this->db_prefix, $sql);
+    return $this->linker->prepare( $this->sql );
   }
   
   function get_row($sql) {
@@ -108,7 +109,6 @@ class CLASS_DB_MYSQL {
   function dummy(&$record) {}
     
   function get_results($sql, &$result, $call=array()) {
-    $this->setQuery( $sql );
     if(!is_array($result)) {
       $this->set_error('invalid parameter $$result');
       return false;
@@ -126,7 +126,7 @@ class CLASS_DB_MYSQL {
       $method  = 'dummy';
     }
     
-    $res = $this->linker->prepare( $this->sql );
+    $res = $this->setQuery( $sql );
     $res->execute();
 
     while( $record = $res->fetch( PDO::FETCH_ASSOC ) ) {
@@ -141,8 +141,6 @@ class CLASS_DB_MYSQL {
   
   // 执行无记录集返回的sql语句
   function execute_tpl($sql, $context, $tpl, &$out_buffer) {
-    $this->setQuery( $sql );
-
     // check $context
     if(!is_object($context) || !method_exists($context, 'item_process')) {
       $this->set_error(
@@ -150,7 +148,9 @@ class CLASS_DB_MYSQL {
       return false;
     }
 
-    foreach( $this->linker->query( $this->sql ) as $record ) {
+    $res = $this->setQuery( $sql );
+    $res->execute();
+    while( $record = $res->fetch( PDO::FETCH_ASSOC ) ) {
       $out_buffer .= $context->item_process($record, $tpl);
     }
 
@@ -158,8 +158,8 @@ class CLASS_DB_MYSQL {
   }
   
   function execute($sql) {
-    $this->setQuery($sql);
-    return $this->linker->query( $this->sql );
+    $res = $this->setQuery($sql);
+    return $res->execute( $this->sql ) ? 0:-1;
   }
 
   function query_count($sql) {

@@ -294,6 +294,12 @@ function get_default_value($new_value, $default_value)
  */
 function q_encrypt($input, $key) 
 {
+    $id = $input;
+    $data['iv']=base64_encode(substr('fdakinel;injajdji',0,16));
+    $data['value']=openssl_encrypt($id, 'AES-256-CBC',$key,0,base64_decode($data['iv']));
+    $encrypt=base64_encode(json_encode($data));
+    return $encrypt;
+/*
   // Padding
   $size = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
   $input = q_pkcs5_pad($input, $size);
@@ -306,6 +312,7 @@ function q_encrypt($input, $key)
   $data = base64_encode($iv.$data);
 
   return $data;
+  */
 }
  
 function q_pkcs5_pad($text, $blocksize) {
@@ -322,6 +329,12 @@ function q_pkcs5_pad($text, $blocksize) {
  */
 function q_decrypt($input, $key) 
 {
+  $encrypt = json_decode(base64_decode($input), true);
+  $iv = base64_decode($encrypt['iv']);
+  $decrypt = openssl_decrypt($encrypt['value'], 'AES-256-CBC', $key, 0, $iv);
+  return $decrypt;
+
+/*
   // Base64 decode
   $input = base64_decode( $input );
 
@@ -341,6 +354,7 @@ function q_decrypt($input, $key)
 	$decrypted = substr($decrypted, 0, -$padding);
 
   return $decrypted;
+  */
 }	
 
 function q_inject_check($sql_str) 
