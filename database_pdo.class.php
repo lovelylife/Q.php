@@ -159,7 +159,7 @@ class CLASS_DB_MYSQL {
   
   function execute($sql) {
     $res = $this->setQuery($sql);
-    return $res->execute( $this->sql ) ? 0:-1;
+    return $res->execute();
   }
 
   function query_count($sql) {
