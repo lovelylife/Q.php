@@ -55,6 +55,11 @@ class CLASS_DB_MYSQL {
       trigger_error("Can\"t use ".$this->db_name." : " . mysql_error(), E_USER_ERROR);
       exit();
     }
+
+    $this->linker->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    //if( version_compare(PHP_VERSION, '5.3.6', '<') && !defined('PDO::MYSQL_ATTR_INIT_COMMAND') ){
+    //  $this->linker->exec( "SET NAMES '".$this->db_lang."';" );
+    //}
     $this->linker->exec( "SET NAMES '".$this->db_lang."';" );
     // set language
     //mysql_query("SET NAMES '".$this->db_lang."';", $this->linker);
