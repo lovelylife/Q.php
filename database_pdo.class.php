@@ -43,10 +43,10 @@ class CLASS_DB_MYSQL {
       array( PDO::ATTR_PERSISTENT => true )
     );
     
-    if( $this->db_lang ) {
+    //if( $this->db_lang ) {
       //$init[ PDO::MYSQL_ATTR_INIT_COMMAND ] = "SET NAMES '".$this->db_lang."';";
       //$dsn .= ";charset=".$this->db_lang;
-    }
+    //}
 
     $this->linker = new PDO( $dsn, $user, $pwd, $init );
     
@@ -60,7 +60,9 @@ class CLASS_DB_MYSQL {
     //if( version_compare(PHP_VERSION, '5.3.6', '<') && !defined('PDO::MYSQL_ATTR_INIT_COMMAND') ){
     //  $this->linker->exec( "SET NAMES '".$this->db_lang."';" );
     //}
-    $this->linker->exec( "SET NAMES '".$this->db_lang."';" );
+    if( $this->db_lang ) {
+      $this->linker->exec( "SET NAMES '".$this->db_lang."';" );
+    } 
     // set language
     //mysql_query("SET NAMES '".$this->db_lang."';", $this->linker);
     // sql mode
