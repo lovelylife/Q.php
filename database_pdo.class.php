@@ -209,7 +209,7 @@ class CLASS_DB_MYSQL {
   }
   
   function affected_rows() {
-    return mysql_affected_rows($this->linker);
+    return $this->linker->rowCount();
   }
 
   function free_result($result) {
