@@ -183,10 +183,8 @@ class CLASS_PAGE {
       $this->url_template=$url."?".$this->page_key."=";
       return;
     }
-    print_r($this); 
     // 存在其他参数
     $params = preg_split("/&/", $_SERVER["QUERY_STRING"]);
-    print_r($params);
     $params2 = array();
     foreach($params as $value) {
       $l = preg_split("/=/", $value);
