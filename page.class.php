@@ -185,7 +185,7 @@ class CLASS_PAGE {
     }
     
     // 存在其他参数
-    $params = str_split("&", $_SERVER["QUERY_STRING"]);
+    $params = preg_split("/&/", $_SERVER["QUERY_STRING"]);
     $params2 = array();
     foreach($params as $value) {
       $l = str_split("=", $value);
