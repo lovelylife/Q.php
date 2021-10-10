@@ -133,10 +133,10 @@ class CLASS_DB_MYSQL {
       $method  = 'dummy';
     }
     
-    $res = $this->setQuery( $sql );
-    $res->execute();
+    $this->res = $this->setQuery( $sql );
+    $this->res->execute();
 
-    while( $record = $res->fetch( PDO::FETCH_ASSOC ) ) {
+    while( $record = $this->res->fetch( PDO::FETCH_ASSOC ) ) {
       //print_r( $record );
       $context->$method($record);
       array_push($result, $record);
@@ -155,9 +155,9 @@ class CLASS_DB_MYSQL {
       return false;
     }
 
-    $res = $this->setQuery( $sql );
-    $res->execute();
-    while( $record = $res->fetch( PDO::FETCH_ASSOC ) ) {
+    $this->res = $this->setQuery( $sql );
+    $this->res->execute();
+    while( $record = $this->res->fetch( PDO::FETCH_ASSOC ) ) {
       $out_buffer .= $context->item_process($record, $tpl);
     }
 
@@ -165,8 +165,8 @@ class CLASS_DB_MYSQL {
   }
   
   function execute($sql) {
-    $res = $this->setQuery($sql);
-    return $res->execute();
+    $this->res = $this->setQuery($sql);
+    return $this->res->execute();
   }
 
   function query_count($sql) {
@@ -209,7 +209,7 @@ class CLASS_DB_MYSQL {
   }
   
   function affected_rows() {
-    return $this->linker->rowCount();
+    return $this->res->rowCount();
   }
 
   function free_result($result) {

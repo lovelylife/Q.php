@@ -22,7 +22,7 @@ class CLASS_MODULE {
   }
      
   // 构造函数
-  function CLASS_MODULE() { $this->__construct(); }
+  //function CLASS_MODULE() { $this->__construct(); }
   
   // Ajax模式入口
   function __doajax($app, $action) {
@@ -101,7 +101,7 @@ class CLASS_MODULE {
 class CLASS_QRPCMODULE 
   extends CLASS_MODULE
 {
-  function CLASS_QRPCMODULE() {
+  function __construct() {
     parent::__construct(); 
   }
 
@@ -125,7 +125,7 @@ class CLASS_QRPCMODULE
 class CLASS_QRPCMODULE2 
   extends CLASS_MODULE
 {
-  function CLASS_QRPCMODULE() {
+  function __construct() {
     parent::__construct(); 
   }
 
@@ -144,7 +144,7 @@ class CLASS_QRPCMODULE2
 class CLASS_QUIMODULE
   extends CLASS_MODULE 
 {
-  function CLASS_QUIMODULE() { parent::__construct(); }
+  function __construct() { parent::__construct(); }
 
   function doMain($action) {
     $method=$action;

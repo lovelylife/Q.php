@@ -23,7 +23,7 @@ class QPHP_session {
     ini_set('session.cookie_domain', '.wayixia.com');
     ini_set('session.cookie_lifetime', 3600*24*15 );
     //将 session.save_handler 设置为 user，而不是默认的 files
-    session_module_name('user');
+    //session_module_name('user');
 
     //定义 SESSION 各项操作所对应的方法名
     if( !session_set_save_handler(
